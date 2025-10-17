@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PlayerMoveState : EntityState
+public class PlayerMoveState : PlayerGroundedState
 {
-    public PlayerMoveState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
+    public PlayerMoveState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
 
@@ -15,5 +15,8 @@ public class PlayerMoveState : EntityState
         {
             stateMachine.ChangeState(player.idleState);
         }
+
+        // |EN| Set the player's velocity based on movement input and move speed |TR| Hareket girdisi ve hareket hızına göre player'ın hızını ayarla
+        player.SetVelocity(player.movementInput.x * player.moveSpeed, rb.linearVelocity.y);
     }
 }

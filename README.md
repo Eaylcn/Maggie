@@ -17,6 +17,19 @@ Almost every line of code includes **both English and Turkish comments** to make
 - Well-structured and documented C# scripts  
 - All assets are **free and license-safe**  
 
+## 📅 Development Progress
+
+### Day 1 — Core Movement System
+**Features Added:**
+- Player movement logic implemented  
+- Jump and air control mechanics added  
+- Idle and movement animations integrated  
+- Flip logic created for direction handling  
+- Basic state machine developed  
+- Two new superstates added for future extensibility  
+
+> The movement system is now functional and ready for expansion (combat, wall slide, wall jump etc.)
+
 ---
 
 ## 🇹🇷 Türkçe Açıklama
@@ -36,6 +49,19 @@ Bu sayede hem kendim hem de projeyi inceleyenler için öğrenme süreci daha ş
 - 2D RPG mekaniği (hareket, etkileşim, envanter vs.)  
 - Temiz ve iyi belgelenmiş C# kod yapısı  
 - Tüm assetler **ücretsiz** ve **lisans açısından güvenli**
+
+## 📅 Gelişim Günlüğü
+
+### 1. Gün — Temel Hareket Sistemi
+**Eklenen Özellikler:**
+- Oyuncu hareket mantığı oluşturuldu  
+- Zıplama ve havada yatay hareket eklendi  
+- Idle ve hareket animasyonları eklendi  
+- Yön değişimi (flip) mantığı geliştirildi  
+- Temel state sistemi oluşturuldu  
+- İki yeni superstate eklendi (genişletme için altyapı)  
+
+> Hareket sistemi artık işlevsel durumda ve ileride savaş, duvardan kayma ve duvardan sıçrama gibi sistemlere entegre edilebilir.
 
 ---
 

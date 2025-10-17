@@ -5,31 +5,41 @@ public abstract class EntityState
 {
     protected Player player;
     protected StateMachine stateMachine;
-    protected string stateName;
+    protected string animBoolName;
 
-    // |EN| Constructor to initialize the state with player, state machine and state name |TR| State'i player, state machine ve state adı ile başlatmak için yapıcı
-    public EntityState(Player player, StateMachine stateMachine, string stateName)
+    protected Animator anim;
+    protected Rigidbody2D rb;
+    protected PlayerInputSet input;
+
+    // |EN| Constructor to initialize the state with player, state machine and state name |TR| State'i player, state machine ve state adı ile başlatmak için constructor
+    public EntityState(Player player, StateMachine stateMachine, string animBoolName)
     {
         this.player = player;
         this.stateMachine = stateMachine;
-        this.stateName = stateName;
+        this.animBoolName = animBoolName;
+
+        // |EN| Cache commonly used components |TR| Sık kullanılan bileşenleri önbelleğe al
+        anim = player.anim;
+        rb = player.rb;
+        input = player.input;
     }
 
     public virtual void Enter()
     {
         // |EN| Eveytime state will be changed this method will be called |TR| Her state değiştiğinde bu method çağrılacak
-        Debug.Log("I entered to " + stateName + " state ");
+        anim.SetBool(animBoolName, true);
     }
 
     public virtual void Update()
     {
         // |EN| We are going to run logic of the state here |TR| State'in mantığını burada çalıştıracağız
-        Debug.Log("I am updating " + stateName + " state ");
+
+        anim.SetFloat("yVelocity", rb.linearVelocity.y); // |EN| Update yVelocity parameter for animations |TR| Animasyonlar için yVelocity parametresini güncelle
     }
     
     public virtual void Exit()
     {
         // |EN| This method will be called when exiting the state |TR| Bu method state'den çıkarken çağrılacak
-        Debug.Log("I exited from " + stateName + " state ");
+        anim.SetBool(animBoolName, false);
     }
 }

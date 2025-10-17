@@ -13,13 +13,19 @@ public class StateMachine
 
     public void ChangeState(EntityState newState)
     {
-        // |EN| Call the Exit method of the current state |TR| Mevcut state'in Exit metodunu çağır
+        // |EN| Call the Exit method of the current state |TR| Mevcut state'in Exit methodunu çağır
         currentState.Exit();
 
         // |EN| Change to the new state |TR| Yeni duruma geç
         currentState = newState;
 
-        // |EN| Call the Enter method of the new state |TR| Yeni state'in Enter metodunu çağır
+        // |EN| Call the Enter method of the new state |TR| Yeni state'in Enter methodunu çağır
         currentState.Enter();
+    }
+
+    public void UpdateActiveState()
+    {
+        // |EN| Update the current state |TR| Mevcut state'i güncelle
+        currentState.Update();
     }
 }
