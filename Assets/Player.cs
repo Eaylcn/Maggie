@@ -14,20 +14,29 @@ public class Player : MonoBehaviour
     public PlayerFallState fallState { get; private set; }
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
+    public PlayerDashState dashState { get; private set; }
+    public PlayerBasicAttackState basicAttackState { get; private set; }
+
+    [Header("Attack Settings")]
+    public Vector2[] attackMovement;              // |EN| Attack movement vectors for each combo |TR| Her kombinasyon için saldırı hareket vektörleri
+    public float attackMovementDuration = 0.1f;  // |EN| Duration for which attack movement is applied |TR| Saldırı hareketinin uygulandığı süre
+    public float comboResetTime = 1.0f;          // |EN| Time after which the attack combo resets |TR| Saldırı kombosunun sıfırlandığı süre
 
     [Header("Movement Settings")]
     public float moveSpeed = 8f;
     public float jumpForce = 12f;
     public Vector2 wallJumpForce;
-
-    [Range(0f, 1f)]
-    public float airMoveMultiplier = 0.8f;                  // |EN| Should be between 0 and 1 |TR| 0 ile 1 arasında olmalı
     
     [Range(0f, 1f)]
+    public float airMoveMultiplier = 0.8f;                  // |EN| Should be between 0 and 1 |TR| 0 ile 1 arasında olmalı
+    [Range(0f, 1f)]
     public float wallSlideSlowdownFactor = 0.3f;            // |EN| Factor to slow down fall speed during wall slide |TR| Duvar kayması sırasında düşme hızını yavaşlatma faktörü
+    [Space]
+    public float dashDuration = 0.25f;                      // |EN| Duration of the dash in seconds |TR| Dash süresi (saniye cinsinden)
+    public float dashSpeed = 20f;                           // |EN| Speed during the dash |TR| Dash sırasında hız
     private bool facingRight = true;                        // |EN| True if facing right, false if facing left |TR| Sağ bakıyorsa true, sol bakıyorsa false
     public int facingDirection { get; private set; } = 1;   // |EN| 1 for right, -1 for left |TR| Sağ için 1, sol için -1
-    public Vector2 movementInput { get; private set; }
+    public Vector2 movementInput { get; private set; }      // |EN| Player movement input vector |TR| Player hareket girdisi vektörü
 
     [Header("Collision Detection Settings")]
     [SerializeField] private float groundCheckDistance = 1.4f;  // |EN| Distance for ground detection raycast |TR| Zemin algılama ışın mesafesi
@@ -46,12 +55,15 @@ public class Player : MonoBehaviour
         stateMachine = new StateMachine();
         input = new PlayerInputSet();
 
+        // |EN| Initialize all player states |TR| Tüm player state'lerini başlat
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         moveState = new PlayerMoveState(this, stateMachine, "Move");
         jumpState = new PlayerJumpState(this, stateMachine, "JumpFall"); 
         fallState = new PlayerFallState(this, stateMachine, "JumpFall");
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "JumpFall");
+        dashState = new PlayerDashState(this, stateMachine, "Dash");
+        basicAttackState = new PlayerBasicAttackState(this, stateMachine, "BasicAttack");
     }
 
     // |EN| OnEnable is called when the object becomes enabled and active |TR| OnEnable, nesne etkinleştirildiğinde ve aktif olduğunda çağrılır
@@ -80,6 +92,11 @@ public class Player : MonoBehaviour
     {
         HandleCollisionDetection();        // |EN| Handle collision detection (e.g., ground check) |TR| Çarpışma algılama işlemini yönet (örneğin, zemin kontrolü)
         stateMachine.UpdateActiveState();  // |EN| Update the active state |TR| Aktif state'i güncelle
+    }
+
+    public void CallAnimationTrigger()
+    {
+        stateMachine.currentState.CallAnimationTrigger(); // |EN| Forward the call to the current state |TR| Çağrıyı mevcut state'e ilet
     }
 
     // |EN| Method to set the player's velocity |TR| Player'ın hızını ayarlamak için method

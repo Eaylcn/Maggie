@@ -351,6 +351,7 @@ GameObject:
   - component: {fileID: 728378620}
   - component: {fileID: 728378622}
   - component: {fileID: 728378621}
+  - component: {fileID: 728378623}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -450,6 +451,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &728378623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728378619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4720e297c33f140b4d8ef607d2e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &799312008
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,10 +932,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8ba907bc2486542a8fb0a8def832ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackMovement:
+  - {x: 3, y: 1.5}
+  - {x: 1, y: 2.5}
+  - {x: 5, y: 2.5}
+  attackMovementDuration: 0.1
+  comboResetTime: 1
   moveSpeed: 8
   jumpForce: 12
+  wallJumpForce: {x: 6, y: 12}
   airMoveMultiplier: 0.8
   wallSlideSlowdownFactor: 0.3
+  dashDuration: 0.25
+  dashSpeed: 20
   groundCheckDistance: 1.4
   wallCheckDistance: 0.4
   whatIsGround:
