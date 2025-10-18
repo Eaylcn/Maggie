@@ -14,101 +14,126 @@ Almost every script includes both English and Turkish comments for clarity and a
 ---
 
 ### 🎮 Current Features
-- Built with **Unity 6** + **New Input System**
+- Developed with **Unity 6** + **New Input System**
 - **Smooth movement** with responsive input
 - **Idle**, **walk**, and **jump** animations
 - **Air control** (mid-air horizontal movement)
 - **Wall Slide** and **Wall Jump**
-- **Flip logic** (facing direction)
-- Modular **State Machine** (Grounded & OnAir)
 - **Dash** ability
-- **Basic Attack** and initial **Combo Attack** system
+- **Basic Attack** and **Combo Attack** system
+- **Jump Attack** and **Wall Jump Attack**
+- **Dynamic attack direction** during combos
+- Improved **wall detection**, **slide logic**, and **flexible movement**
+- Fixed multiple **movement & collision bugs**
 - All assets are **free and license-safe**
 
 ---
 
 ## 📅 Development Progress
 
-### Day 1 — Movement & Early Combat
+### ✅ Day 1 — Core Movement & Combat Completed
 
-Focused on building a responsive controller and a modular state system, then extended it with wall interactions and a first pass on combat.
+The first full development day focused on creating a responsive movement system and laying down the foundation of the player combat mechanics.  
+Over time, movement and combat were polished to achieve a fluid gameplay feel.
 
 **Implemented:**
-- Core movement and input handling
-- Jump with smooth air control
-- Idle / walk animation transitions
-- Directional flip logic
-- State structure split into Grounded and OnAir
+- Core movement, input handling, and state architecture  
+- Jump and air control mechanics  
+- Idle / walk animation transitions  
+- Wall Slide & Wall Jump mechanics  
+- Dash, Basic Attack, and Combo Attack  
+- Jump Attack
+- Dynamic attack direction within combos  
+- Fixed combo-idle transition and wall walking issues  
+- Improved wall detection and slide logic for smoother collisions  
 
-**Extended movement (same day):**
-- Wall Slide and Wall Jump
-- Improved transitions across ground, wall, and air
-- Tuned jump responsiveness and general feel
+> ✅ **Day 1 completed** — Player controller is fully functional and ready for level integration.
 
-**Early combat & mobility:**
-- **Dash** ability
-- **Basic Attack**
-- Initial **Combo Attack** chain (v1)
+---
 
-**Next goals (before end of day):**
-- Enhance **Combo** logic 
-- Add **Jump Attack**
-- Improve **Wall Detection**
-- Polish **Idle** and **Movement** feel
+### 🎯 Day 2 Goals — World & Enemy Setup
+
+Next focus: building the game world and introducing enemies.
+
+**Planned tasks:**
+- Create **level setup** and design basic environment  
+- Implement **camera adjustments** and **Cinemachine** configuration  
+- Set up **Tilemaps** and **Parallax / Endless backgrounds**  
+- Begin developing the **Enemy State Machine**  
+  - Idle  
+  - Patrol / Movement  
+  - Detection  
+  - Chase  
+  - Attack  
+
+> The upcoming phase will focus on integrating player mechanics into a living, dynamic environment.
 
 ---
 
 ## TR — Türkçe Açıklama
 
-**Maggie**, **Unity 6** üzerinde **C#** ve **Yeni Input System** kullanılarak geliştirilen bir **2D RPG projesidir**.  
-Bir tutorialdan esinlenilmiştir, ancak birebir kopyalanmamış; **kendi oyun fikrim** doğrultusunda geliştirilmiştir.
-
-Bu projenin amacı **portföyümü güçlendirmek**, **oyun geliştirme tutkum**u göstermek ve  
-**düzenli, çift dilli (İngilizce–Türkçe) bir kod yapısı** sergilemektir.
-
-Kodlarımın büyük kısmında hem İngilizce hem Türkçe açıklama satırları bulunur.
+**Maggie**, **Unity 6** üzerinde **C#** ve **Yeni Input System** kullanılarak geliştirilen bir **2D RPG projesidir.**  
+Bir tutorialdan ilham alınmış, ancak birebir kopyalanmamış; **kendi oyun fikirlerimle** genişletilmiştir.  
+Projenin amacı **portföyümü güçlendirmek**, **oyun geliştirme tutkum**u göstermek ve  
+**düzenli, çift dilli (İngilizce–Türkçe)** bir kod yapısı sergilemektir.
 
 ---
 
 ### 🎮 Mevcut Özellikler
-- Unity 6 + Yeni Input System
-- Hassas ve akıcı **hareket**
-- **Idle**, **yürüme**, **zıplama** animasyonları
-- **Havada yatay kontrol (air control)**
-- **Duvar kayma (Wall Slide)** ve **duvar zıplama (Wall Jump)**
-- **Yön değiştirme (flip)**
-- Modüler **State Machine** (Grounded & OnAir)
-- **Dash** yeteneği
-- **Basic Attack** ve ilk sürüm **Combo Attack** sistemi
+- Unity 6 + Yeni Input System  
+- Hassas ve akıcı **hareket sistemi**  
+- **Idle**, **yürüme**, **zıplama** animasyonları  
+- **Havada yatay kontrol (air control)**  
+- **Duvar kayma (Wall Slide)** ve **duvar zıplama (Wall Jump)**  
+- **Dash** yeteneği  
+- **Basic Attack**, **Combo Attack**, **Jump Attack**, **Wall Jump Attack**  
+- **Atak yönünü değiştirme** ve **esnek hareket**  
+- **Duvar tespiti (wall detection)** ve kayma mantığı iyileştirildi  
+- Birçok **hareket & çarpışma hatası** giderildi  
 - Tüm assetler **ücretsiz** ve **lisans açısından güvenli**
 
 ---
 
 ## 📅 Gelişim Günlüğü
 
-### 1. Gün — Hareket & Erken Savaş
+### ✅ 1. Gün — Temel Hareket & Savaş Sistemi Tamamlandı
 
-Önce tepkisel bir kontrolcü ve modüler state yapısı kuruldu; aynı gün duvar etkileşimleri eklendi ve savaş sistemine giriş yapıldı.
+İlk gün boyunca karakterin tüm temel hareketleri ve savaş altyapısı oluşturuldu.  
+Hareketin akıcılığı ve kontrol hissi odaklı geliştirmelerle gün tamamlandı.
 
-**Yapılanlar:**
-- Temel hareket ve input yönetimi
-- Zıplama + havada yatay hareket
-- Idle / yürüme animasyon geçişleri
-- Yön değiştirme (flip) mantığı
-- Grounded ve OnAir olarak ayrılmış state yapısı
+**Gerçekleştirilenler:**
+- Temel hareket, input ve state yapısı  
+- Zıplama, havada hareket ve animasyon geçişleri  
+- Duvar kayma ve duvar zıplama sistemleri  
+- Dash, Basic Attack ve Combo Attack sistemi  
+- Jump Attack eklendi  
+- Combo sırasında yön değiştirme sağlandı  
+- Idle geçiş ve duvar içinde yürüme hataları düzeltildi  
+- Duvar tespiti ve kayma sistemi geliştirildi  
 
-**Gelişmiş hareket (aynı gün):**
-- Duvar kayma ve duvar zıplama
-- Zemin/duvar/hava geçişleri iyileştirildi
-- Zıplama tepkisi ve genel hareket hissi ayarlandı
+> ✅ **1. Gün tamamlandı** — Karakter kontrol sistemi artık tam işlevsel ve dünya kurulumuna hazır.
 
-**Erken savaş & mobilite:**
-- **Dash** yeteneği
-- **Basic Attack**
-- İlk sürüm **Combo Attack** zinciri (v1)
+---
 
-**Günün bitmeden hedefleri:**
-- **Combo**’yu geliştirme 
-- **Jump Attack** ekleme
-- **Wall Detection** iyileştirme
-- **Idle** ve **Movement** hissini parlatma
+### 🎯 2. Gün Hedefleri — Dünya & Düşman Sistemleri
+
+Bir sonraki aşama, oyun dünyasının temellerini oluşturmak ve düşman AI sistemine geçmek.
+
+**Planlanan görevler:**
+- **Level kurulumları** ve temel çevre tasarımı  
+- **Kamera ayarları** ve **Cinemachine** entegrasyonu  
+- **Tilemap** ve **Parallax / Endless background** oluşturulması  
+- **Enemy State Machine** yapısının başlatılması:  
+  - Idle  
+  - Movement / Patrol  
+  - Detection  
+  - Chase  
+  - Attack  
+
+> 2. günün amacı, karakter mekaniğini yaşayan bir dünyaya entegre etmek ve temel düşman davranışlarını inşa etmektir.
+
+---
+
+### 👨‍💻 Developer
+**Emir Ata Yalçın**  
+> Game Developer | Software Engineer | Passionate About RPGs and Creative Coding
