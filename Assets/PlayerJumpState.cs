@@ -18,8 +18,8 @@ public class PlayerJumpState : PlayerOnAirState
     {
         base.Update();
 
-        // |EN| Transition to Fall state if the player is falling |TR| Player düşüyorsa Fall state'ine geçiş yap
-        if (rb.linearVelocity.y < 0)
+        // |EN| Transition to fall state if the player is descending and not in jump attack state |TR| Oyuncu alçalıyorsa ve zıplama saldırısı durumunda değilse düşme durumuna geç
+        if (rb.linearVelocity.y < 0 && stateMachine.currentState != player.jumpAttackState)
             stateMachine.ChangeState(player.fallState);
     }
 }

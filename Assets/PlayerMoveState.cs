@@ -10,8 +10,8 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.Update();
 
-        // |EN| Transition to Idle state if there is no movement input |TR| Hareket girdisi yoksa Idle state'ine geçiş yap
-        if (player.movementInput == Vector2.zero)
+        // |EN| Transition to Idle state if there is no movement input or if moving into a wall |TR| Hareket girdisi yoksa veya bir duvara doğru hareket ediliyorsa Idle state'ine geçiş yap
+        if (player.movementInput.x == 0 || player.wallDetected)
         {
             stateMachine.ChangeState(player.idleState);
         }

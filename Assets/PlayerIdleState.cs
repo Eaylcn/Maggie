@@ -18,6 +18,10 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Update();
 
+        // |EN| Prevent transitioning to Move state if player is trying to move into a wall |TR| Oyuncu bir duvara doğru hareket etmeye çalışıyorsa Move state'ine geçişi engelle
+        if (player.movementInput.x == player.facingDirection && player.wallDetected)
+            return;
+
         // |EN| Transition to Move state if there is movement input |TR| Hareket girdisi varsa Move state'ine geçiş yap
         if (player.movementInput != Vector2.zero)
         {

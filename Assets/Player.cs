@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -16,11 +17,14 @@ public class Player : MonoBehaviour
     public PlayerWallJumpState wallJumpState { get; private set; }
     public PlayerDashState dashState { get; private set; }
     public PlayerBasicAttackState basicAttackState { get; private set; }
+    public PlayerJumpAttackState jumpAttackState { get; private set; }
 
     [Header("Attack Settings")]
-    public Vector2[] attackMovement;              // |EN| Attack movement vectors for each combo |TR| Her kombinasyon için saldırı hareket vektörleri
+    public Vector2[] attackMovement;             // |EN| Attack movement vectors for each combo |TR| Her kombinasyon için saldırı hareket vektörleri
+    public Vector2 jumpAttackMovement;           // |EN| Movement vector for jump attack |TR| Zıplama saldırısı için hareket vektörü
     public float attackMovementDuration = 0.1f;  // |EN| Duration for which attack movement is applied |TR| Saldırı hareketinin uygulandığı süre
     public float comboResetTime = 1.0f;          // |EN| Time after which the attack combo resets |TR| Saldırı kombosunun sıfırlandığı süre
+    private Coroutine queuedAttackCoroutine;     // |EN| Coroutine to handle queued attacks |TR| Sıraya alınan saldırıları yönetmek için Coroutine
 
     [Header("Movement Settings")]
     public float moveSpeed = 8f;
@@ -42,6 +46,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 1.4f;  // |EN| Distance for ground detection raycast |TR| Zemin algılama ışın mesafesi
     [SerializeField] private float wallCheckDistance = 0.4f;    // |EN| Distance for wall detection raycast |TR| Duvar algılama ışın mesafesi
     [SerializeField] private LayerMask whatIsGround;            // |EN| LayerMask to define what is considered ground |TR| Hangi katmanın zemin olarak kabul edileceğini tanımlamak için LayerMask
+    [SerializeField] Transform primaryWallCheck;                // |EN| Primary transform for wall detection |TR| Duvar algılama için birincil transform
+    [SerializeField] Transform secondaryWallCheck;              // |EN| Secondary transform for wall detection |TR| Duvar algılama için ikincil transform
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
 
@@ -64,6 +70,7 @@ public class Player : MonoBehaviour
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "JumpFall");
         dashState = new PlayerDashState(this, stateMachine, "Dash");
         basicAttackState = new PlayerBasicAttackState(this, stateMachine, "BasicAttack");
+        jumpAttackState = new PlayerJumpAttackState(this, stateMachine, "JumpAttack");
     }
 
     // |EN| OnEnable is called when the object becomes enabled and active |TR| OnEnable, nesne etkinleştirildiğinde ve aktif olduğunda çağrılır
@@ -92,6 +99,23 @@ public class Player : MonoBehaviour
     {
         HandleCollisionDetection();        // |EN| Handle collision detection (e.g., ground check) |TR| Çarpışma algılama işlemini yönet (örneğin, zemin kontrolü)
         stateMachine.UpdateActiveState();  // |EN| Update the active state |TR| Aktif state'i güncelle
+    }
+
+    // |EN| Method to enter the attack state because of we need MonoBehaviour to start coroutine |TR| Coroutine başlatmak için MonoBehaviour'a ihtiyacımız olduğu için saldırı state'ine girmek için method 
+    public void EnterAttackStateWithQueue()
+    {
+        // |EN| If there's an existing queued attack coroutine, stop it to avoid multiple queued attacks |TR| Mevcut bir sıraya alınan saldırı coroutine'i varsa, birden fazla sıraya alınan saldırıyı önlemek için durdur
+        if (queuedAttackCoroutine != null)
+            StopCoroutine(queuedAttackCoroutine);
+
+        queuedAttackCoroutine = StartCoroutine(EnterAttackStateAfterDelay()); // |EN| Start coroutine to enter attack state after a delay |TR| Gecikmeden sonra saldırı state'ine girmek için coroutine başlat
+    }
+
+    private IEnumerator EnterAttackStateAfterDelay()
+    {
+        yield return new WaitForEndOfFrame(); // |EN| Wait until the end of the frame to ensure input is registered |TR| Girdinin kaydedildiğinden emin olmak için kare sonuna kadar bekle
+        stateMachine.ChangeState(basicAttackState);
+        queuedAttackCoroutine = null; // |EN| Reset the coroutine reference after execution |TR| Yürütme sonrası coroutine referansını sıfırla
     }
 
     public void CallAnimationTrigger()
@@ -127,13 +151,17 @@ public class Player : MonoBehaviour
     private void HandleCollisionDetection()
     {
         groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround); 
-        wallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
+
+        // |EN| Check for wall detection using two raycasts for better accuracy |TR| Daha iyi doğruluk için iki ışın kullanarak duvar algılamasını kontrol et
+        wallDetected = Physics2D.Raycast(primaryWallCheck.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround)
+                    && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
     }
 
     // |EN| Method to visualize ground and wall check rays in the editor |TR| Editörde zemin ve duvar kontrol ışınlarını görselleştirmek için method
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));                
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(wallCheckDistance * facingDirection, 0)); 
+        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));
+        Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new Vector3(wallCheckDistance * facingDirection, 0)); 
+        Gizmos.DrawLine(secondaryWallCheck.position, secondaryWallCheck.position + new Vector3(wallCheckDistance * facingDirection, 0));
     }
 }

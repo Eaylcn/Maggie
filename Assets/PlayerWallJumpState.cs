@@ -25,5 +25,9 @@ public class PlayerWallJumpState : EntityState
         // |EN| Transition to Wall Slide state if the player is touching a wall again |TR| Player tekrar bir duvara temas ediyorsa Wall Slide state'ine geçiş yap
         if (player.wallDetected)
             stateMachine.ChangeState(player.wallSlideState);
+
+        // |EN| Transition to jump attack state if attack input is pressed while jumping off the wall |TR| Duvar zıplaması yaparken saldırı girişi yapılırsa jump attack state'ine geçiş yap
+        if (input.Player.Attack.WasPressedThisFrame())
+            stateMachine.ChangeState(player.jumpAttackState);
     }
 }

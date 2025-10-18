@@ -12,8 +12,9 @@ public class PlayerDashState : EntityState
     public override void Enter()
     {
         base.Enter();
+        
+        dashDirection = player.movementInput.x != 0 ? (int)player.movementInput.x : player.facingDirection; // |EN| Determine dash direction based on input or facing direction |TR| Girişe veya bakış yönüne göre dash yönünü belirle
 
-        dashDirection = player.facingDirection; // |EN| Store dash direction at the start |TR| Başlangıçta dash yönünü sakla
         stateTimer = player.dashDuration; // |EN| Initialize dash duration timer |TR| Dash süresi zamanlayıcısını başlat
 
         originalGravityScale = rb.gravityScale; // |EN| Store original gravity scale |TR| Orijinal yerçekimi ölçeğini sakla
