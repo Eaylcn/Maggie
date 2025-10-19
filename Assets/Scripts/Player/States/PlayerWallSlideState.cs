@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerWallSlideState : EntityState
+public class PlayerWallSlideState : PlayerState
 {
     public PlayerWallSlideState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -24,7 +24,9 @@ public class PlayerWallSlideState : EntityState
         if (player.groundDetected)
         {
             stateMachine.ChangeState(player.idleState);
-            player.Flip(); // |EN| Flip the player to face away from the wall when landing |TR| Player yere indiğinde duvardan uzaklaşacak şekilde döndür
+
+            if(player.facingDirection != player.movementInput.x)
+                player.Flip(); // |EN| Flip the player to face away from the wall when landing |TR| Player yere indiğinde duvardan uzaklaşacak şekilde döndür
         }
     }
 

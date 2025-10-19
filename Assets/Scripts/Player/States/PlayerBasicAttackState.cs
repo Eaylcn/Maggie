@@ -23,7 +23,7 @@ using UnityEngine;
  */
 
 
-public class PlayerBasicAttackState : EntityState
+public class PlayerBasicAttackState : PlayerState
 {
     private float attackMovementTimer;      // |EN| Timer to track duration of attack movement |TR| Saldırı hareketi süresini takip etmek için zamanlayıcı
     private float lastTimeAttacked;      // |EN| Time when the last attack was performed |TR| Son saldırının gerçekleştirildiği zaman

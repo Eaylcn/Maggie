@@ -26,7 +26,7 @@ public class ParallaxBackground : MonoBehaviour
     {
         mainCamera = Camera.main; // |EN| Get the main camera reference. |TR| Ana kamera referansını al.
         cameraHalfWidth = mainCamera.orthographicSize * mainCamera.aspect; // |EN| Calculate half the width of the camera's viewport. |TR| Kameranın görünüm alanının yarısını hesapla.
-        CalculateImageLength(); // |EN| Calculate the width of each background layer's image. |TR| Her arka plan katmanının görüntü genişliğini hesapla.
+        InitializeLayers(); // |EN| Calculate the width of each background layer's image. |TR| Her arka plan katmanının görüntü genişliğini hesapla.
     }
 
     // |EN| Update is called at fixed intervals to ensure smooth parallax movement. |TR| Sabit aralıklarla çağrılır ve düzgün parallax hareketi sağlar.
@@ -46,7 +46,7 @@ public class ParallaxBackground : MonoBehaviour
         }
     }
 
-    private void CalculateImageLength()
+    private void InitializeLayers()
     {
         foreach (ParallaxLayer layer in backgroundLayers)
         {

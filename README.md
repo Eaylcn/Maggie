@@ -2,145 +2,76 @@
 
 ## EN — English Description
 
-**Maggie** is a 2D RPG project developed in **Unity 6**, using **C#** and the **New Input System**.  
-While it takes inspiration from a tutorial series, I’m not following it line by line —  
-instead, I’m building **my own RPG experience** based on what I learn along the way.
+**Maggie** is a 2D RPG project developed in **Unity 6** using **C#** and the **New Input System**.  
+Inspired by a tutorial series but expanded with my own ideas, Maggie aims to build a **unique RPG experience** that reflects both my technical skill and creative direction.
 
-The goal of this project is to **improve my portfolio** and express my **passion for game development**,  
-while demonstrating my ability to write **clean, organized, and bilingual code (English–Turkish)**.
-
-Almost every script includes both English and Turkish comments for clarity and accessibility.
+This project is part of my portfolio development process and a way to showcase my **passion for gameplay systems**, especially in **combat, animation, and AI behavior**.  
+All scripts include **English and Turkish comments** for clarity and documentation.
 
 ---
 
 ### 🎮 Current Features
-- Built with **Unity 6** + **New Input System**
-- **Smooth and responsive movement**
+- Built with **Unity 6** and the **New Input System**
+- **Smooth and responsive movement system**
 - **Idle**, **walk**, and **jump** animations
-- **Air control** (mid-air horizontal movement)
+- **Air control** for mid-air movement
 - **Wall Slide** and **Wall Jump**
-- **Dash** ability
-- **Basic Attack**, **Combo Attack**, **Jump Attack**, and **Wall Jump Attack**
-- **Dynamic attack direction** and **flexible movement**
-- **Improved wall detection** and refined **slide logic**
-- **Parallax** and **Endless Background** system  
-- **Tilemap** environment setup  
-- **Demo Level** created  
-- **Cinemachine integration** for advanced camera control  
+- **Dash**, **Basic Attack**, **Combo Attack**, **Jump Attack**, **Wall Jump Attack**
+- **Dynamic attack direction** and flexible combat handling
+- **Enhanced wall detection** and slide behavior
+- **Parallax** and **Endless Background** systems
+- **Tilemap** environment and **Demo Level**
+- **Cinemachine** camera setup for smooth tracking
+- **Skeleton Enemy AI** with full **State Machine**:
+  - Idle  
+  - Patrol  
+  - Detection  
+  - Chase  
+  - Attack
 - All assets are **free and license-safe**
 
 ---
 
 ## 📅 Development Progress
 
-### ✅ Day 1 — Core Movement & Combat Completed
+### ✅ Day 1 — Core Movement & Combat
+The foundation of Maggie’s movement and combat was built: a fully functional player controller with fluid motion and early combat mechanics.
 
-The first full development day focused on creating a responsive movement system and the foundation of the player combat mechanics.  
-By the end of the day, the character controller became fully functional.
+**Highlights:**
+- Player movement and jump logic  
+- State Machine structure (Grounded / OnAir)  
+- Wall Slide & Wall Jump  
+- Dash, Basic, Combo, Jump, and Wall Jump Attacks  
+- Directional combo control and animation polish  
+- Bug fixes for wall walking and state transitions  
 
-**Key progress:**
-- Core movement and input handling  
-- Jump and air control  
-- Idle / walk transitions and flip logic  
-- Wall Slide & Wall Jump mechanics  
-- Dash, Basic Attack, and Combo Attack (v1)  
-- Jump Attack and Wall Jump Attack  
-- Dynamic combo direction and flexible movement  
-- Fixed combo-idle transition and wall walk bugs  
-- Improved wall detection and slide behavior  
-
-> ✅ **Day 1 completed** — Player mechanics fully functional and ready for environment integration.
+> ✅ **Day 1 Completed** — Core systems stable and ready for world integration.
 
 ---
 
-### ⚙️ Day 2 — World Building & Camera System
+### ✅ Day 2 — World & Enemy AI
+Focus shifted to environment design, camera systems, and enemy implementation.
 
-Focus shifted to designing the game world and improving camera systems using **Cinemachine**.
+**Completed:**
+- Added **Parallax** and **Endless Background**  
+- Built **Tilemap** and **Demo Level**  
+- Integrated **Cinemachine** for dynamic camera behavior  
+- Created **Skeleton Enemy** with full **AI State Machine** (Idle, Patrol, Detection, Chase, Attack)  
 
-**Implemented so far:**
-- **Parallax** and **Endless Background** system  
-- **Tilemap** environment creation  
-- **Demo Level** setup for initial gameplay testing  
-- **Cinemachine** integration for smooth and dynamic camera behavior  
-
-**Next Step:**
-- Begin developing the **Enemy State Machine**:  
-  - Idle  
-  - Movement / Patrol  
-  - Detection  
-  - Chase  
-  - Attack  
-
-> The environment and camera systems are now functional — next step is giving life to the world through enemy AI.
+> ✅ **Day 2 Completed** — The world is alive with a functional enemy AI system.
 
 ---
 
-## TR — Türkçe Açıklama
+### 🎯 Day 3 Goals — Combat & Interaction Systems
+Next step: refining combat feedback and player–world interaction.
 
-**Maggie**, **Unity 6** üzerinde **C#** ve **Yeni Input System** kullanılarak geliştirilen bir **2D RPG projesidir.**  
-Bir tutorialdan esinlenilmiştir ancak birebir kopyalanmamış; tamamen **kendi fikirlerimle** genişletilmiştir.  
-Bu projenin amacı **portföyümü geliştirmek**, **oyun geliştirme tutkum**u göstermek ve  
-**temiz, düzenli ve çift dilli (İngilizce–Türkçe)** bir kod yapısı sunmaktır.
+**Planned:**
+- Expand **Combat System** (damage, hit detection, death handling)
+- Implement **Parry** and **Interface** systems  
+- Add **Item Chest** and **Health Bar**  
+- Integrate **on-hit VFX** and **damage indicators**
 
----
-
-### 🎮 Mevcut Özellikler
-- Unity 6 + Yeni Input System  
-- Akıcı ve hassas **hareket sistemi**  
-- **Idle**, **yürüme**, **zıplama** animasyonları  
-- **Havada yatay kontrol (air control)**  
-- **Duvar kayma (Wall Slide)** ve **duvar zıplama (Wall Jump)**  
-- **Dash**, **Basic Attack**, **Combo Attack**, **Jump Attack**, **Wall Jump Attack**  
-- **Atak yönü değişimi** ve **esnek hareket**  
-- **Duvar tespiti** ve **kayma davranışı** iyileştirildi  
-- **Parallax** ve **Endless Background** sistemi  
-- **Tilemap** ile çevre tasarımı  
-- **Demo Level** oluşturuldu  
-- **Cinemachine** ile gelişmiş kamera yönetimi  
-- Tüm assetler **ücretsiz** ve **lisans açısından güvenli**
-
----
-
-## 📅 Gelişim Günlüğü
-
-### ✅ 1. Gün — Temel Hareket & Savaş Sistemi Tamamlandı
-
-İlk gün boyunca karakterin tüm temel hareketleri ve savaş altyapısı oluşturuldu.  
-Hareketin akıcılığı ve kontrol hissi odaklı geliştirmelerle gün tamamlandı.
-
-**Yapılanlar:**
-- Temel hareket, input ve state yapısı  
-- Zıplama, havada hareket ve animasyon geçişleri  
-- Duvar kayma ve duvar zıplama sistemleri  
-- Dash, Basic Attack ve ilk Combo Attack sistemi  
-- Jump Attack ve Wall Jump Attack eklendi  
-- Combo sırasında yön değiştirme sağlandı  
-- Idle geçiş ve duvar içinde yürüme hataları düzeltildi  
-- Duvar tespiti ve kayma sistemi geliştirildi  
-
-> ✅ **1. Gün tamamlandı** — Karakter kontrol sistemi artık tam işlevsel.
-
----
-
-### ⚙️ 2. Gün — Dünya & Kamera Sistemleri
-
-Bugün odak, oyun dünyasının temellerini oluşturmak ve kamera sistemini geliştirmek üzerineydi.
-
-**Tamamlananlar:**
-- **Parallax** ve **Endless Background** sistemi kuruldu  
-- **Tilemap** ile temel çevre tasarımı yapıldı  
-- **Demo Level** hazırlandı  
-- **Cinemachine** entegrasyonu ile kamera davranışı geliştirildi  
-
-**Sıradaki hedef:**  
-- **Enemy State Machine** sistemine başlamak:  
-  - Idle  
-  - Patrol / Movement  
-  - Detection  
-  - Chase  
-  - Attack  
-
-> Ortam ve kamera sistemleri tamamlandı. Sırada düşman AI sisteminin temelleri var.
+> The focus will shift toward polishing gameplay feel and player feedback loops.
 
 ---
 

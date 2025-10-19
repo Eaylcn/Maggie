@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerDashState : EntityState
+public class PlayerDashState : PlayerState
 {
     private float originalGravityScale;
     private int dashDirection; // |EN| Direction of the dash for safety checks |TR| Güvenlik kontrolleri için dash yönü

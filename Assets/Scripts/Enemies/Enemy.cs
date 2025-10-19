@@ -1,0 +1,57 @@
+using UnityEngine;
+
+public class Enemy : Entity
+{
+    public EnemyIdleState idleState { get; set; }
+    public EnemyMoveState moveState { get; set; }
+    public EnemyAttackState attackState { get; set; }
+    public EnemyBattleState battleState { get; set; }
+
+    [Header("Battle Settings")]
+    public float battleMoveSpeed = 3f; // |EN| Movement speed when in battle state |TR| Savaş durumundayken hareket hızı
+    public float attackDistance = 2f; // |EN| Distance from player at which enemy will initiate attack |TR| Düşmanın saldırıya başlayacağı oyuncudan mesafe
+    public float battleTimeDuration = 5f; // |EN| Duration in seconds for how long the enemy stays in battle state after losing player sight |TR| Düşmanın oyuncuyu görmeyi kaybettikten sonra savaş durumunda ne kadar süre kaldığı saniye cinsinden
+    public float minRetreatDistance = 1f; // |EN| Minimum distance to maintain from player when retreating |TR| Geri çekilirken oyuncudan korunacak minimum mesafe
+    public Vector2 retreatVelocity; // |EN| Velocity applied when retreating from player |TR| Oyuncudan geri çekilirken uygulanan hız
+
+    [Header("Movement Settings")]
+    public float idleDuration = 2f; // |EN| Duration in seconds for how long the enemy stays idle before moving |TR| Düşmanın hareket etmeden önce ne kadar süre boşta kaldığı saniye cinsinden
+    public float moveSpeed = 1.4f;
+
+    [Range(0f, 2f)]
+    public float moveAnimSpeedMultiplier = 1f;
+
+    [Header("Player Detection")]
+    [SerializeField] private LayerMask whatIsPlayer;
+    [SerializeField] private Transform playerCheck; 
+    [SerializeField] private float playerCheckDistance = 10f; // |EN| Distance for raycasting to detect player |TR| Oyuncuyu algılamak için ışınlama mesafesi
+
+    // |EN| Casts a ray to detect the player within a certain distance |TR| Belirli bir mesafe içinde oyuncuyu algılamak için bir ışın atar
+    public RaycastHit2D PlayerDetected()
+    {
+        // |EN| Raycast to check for player detection and if hit ground before player then ignore |TR| Oyuncu algılanması için ışın atar ve oyuncudan önce zemin vurulursa yoksayar
+        RaycastHit2D hit = Physics2D.Raycast(playerCheck.position, Vector2.right * facingDirection, playerCheckDistance, whatIsPlayer | whatIsGround);
+
+        if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Player"))
+            return default; // |EN| Returns default if nothing is hit or if the hit object is not the player |TR| Hiçbir şey vurulmazsa veya vurulan nesne oyuncu değilse varsayılan değeri döndürür
+
+        return hit; // |EN| Returns the RaycastHit2D result of the player detection raycast |TR| Oyuncu algılanırsa RaycastHit2D bilgilerini döndürür, aksi takdirde null döndürür
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        // |EN| Draws player detection ray in Scene view for debugging and visualization |TR| Hata ayıklama ve görselleştirme için Sahne görünümünde oyuncu algılama ışınını çizer
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDirection * playerCheckDistance), playerCheck.position.y));
+
+        // |EN| Draws attack and retreat distance rays in Scene view for debugging and visualization |TR| Hata ayıklama ve görselleştirme için Sahne görünümünde saldırı ve geri çekilme mesafesi ışınlarını çizer
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDirection * attackDistance), playerCheck.position.y));
+
+        // |EN| Draws retreat distance ray in Scene view for debugging and visualization |TR| Hata ayıklama ve görselleştirme için Sahne görünümünde geri çekilme mesafesi ışınını çizer
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDirection * minRetreatDistance), playerCheck.position.y));
+    }
+}
