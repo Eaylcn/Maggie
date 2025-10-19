@@ -21,7 +21,7 @@ public class EntityAnimationTriggers : MonoBehaviour
     private Entity entity;
     private EntityCombat entityCombat;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         entity = GetComponentInParent<Entity>(); // |EN| Get reference to the Entity script in parent GameObject |TR| Üst GameObject'teki Entity script'ine referans al
         entityCombat = GetComponentInParent<EntityCombat>(); // |EN| Get reference to the EntityCombat script in parent GameObject |TR| Üst GameObject'teki EntityCombat script'ine referans al

@@ -3,97 +3,73 @@
 ## EN — English Description
 
 **Maggie** is a 2D RPG project developed in **Unity 6** using **C#** and the **New Input System**.  
-Inspired by a tutorial series but expanded with original ideas, Maggie aims to build a focused RPG experience that showcases gameplay systems, combat, animation, and AI behavior.
+The project started as a tutorial-inspired foundation but evolved into a **fully custom RPG framework** that focuses on **fluid movement**, **responsive combat**, and **dynamic AI behavior**.
 
-This project is part of a portfolio and is documented with English comments for clarity.
+This project serves as a portfolio piece to demonstrate gameplay programming, combat design, and system architecture.  
+All scripts include **English and Turkish comments** for clarity and educational value.
 
 ---
 
 ### 🎮 Current Features
 - Built with **Unity 6** and the **New Input System**
-- Smooth and responsive movement system
-- Idle, walk, and jump animations
-- Air control for mid-air movement
-- Wall Slide and Wall Jump
-- Dash, Basic Attack, Combo Attack, Jump Attack, Wall Jump Attack
-- Dynamic attack direction and flexible combat handling
-- Enhanced wall detection and slide behavior
-- Parallax and Endless Background systems
-- Tilemap environment and Demo Level
-- Cinemachine camera setup for smooth tracking
-- Skeleton Enemy AI with full State Machine:
+- **Fluid 2D movement** and physics-based control  
+- **Idle**, **walk**, **jump**, and **air control** mechanics  
+- **Wall Slide**, **Wall Jump**, and **Dash**  
+- Full **Combat System**:
+  - **Basic Attack**  
+  - **Combo Attack Chain**  
+  - **Jump Attack** & **Wall Jump Attack**  
+  - **Counterattack / Parry** system  
+  - **On-Hit VFX** and knockback feedback  
+  - **Damage & Death states** for both player and enemies  
+- **Enemy AI (Skeleton)** with full State Machine:
   - Idle  
   - Patrol  
   - Detection  
   - Chase  
-  - Attack
-- All assets are free and license-safe
+  - Attack  
+  - Stunned  
+- **Health Bar** for player and enemies  
+- **Stat System foundations** including evasion and core attributes  
+- **Chest Interaction System** (triggered via `IDamageable` interface)  
+- **Parallax & Endless Backgrounds**, **Tilemap**, **Cinemachine** camera  
+- **Demo Level** implemented  
+- All assets are **free and license-safe**
 
 ---
 
 ## 📅 Development Progress
 
-### ✅ Day 1 — Core Movement & Combat
-The foundation of Maggie’s movement and combat was built: a fully functional player controller with fluid motion and early combat mechanics.
+### ✅ Day 1 — Core Movement & Combat  
+Established the player controller, movement, and initial combat systems.  
+Built the foundation of the **State Machine** and responsive input architecture.
 
-Highlights:
-- Player movement and jump logic  
-- State Machine structure (Grounded / OnAir)  
-- Wall Slide & Wall Jump  
-- Dash, Basic, Combo, Jump, and Wall Jump Attacks  
-- Directional combo control and animation polish  
-- Bug fixes for wall walking and state transitions  
+### ✅ Day 2 — Environment & Enemy AI  
+Created the visual world and added a functional **Skeleton Enemy AI** using a modular state machine.
 
-> ✅ Day 1 Completed — Core systems stable and ready for world integration.
+### ✅ Day 3 — Combat System Expansion  
+Focused on combat depth, feedback, and player–enemy interaction systems.
 
----
+**Implemented:**
+- **Target detection** and full **damage system**  
+- **VFX** for taking and dealing damage  
+- **Knockback** for player and enemies  
+- **Dead states** for both player and AI  
+- **Chest interaction** via `IDamageable` interface  
+- **Enemy stunned state** and **player counterattack / parry logic**  
+- **Health bar** UI for both entities  
+- **Stat System base** created and **evasion** logic added  
 
-### ✅ Day 2 — World & Enemy AI
-Focus shifted to environment design, camera systems, and enemy implementation.
-
-Completed:
-- Added Parallax and Endless Background  
-- Built Tilemap and Demo Level  
-- Integrated Cinemachine for dynamic camera behavior  
-- Created Skeleton Enemy with full AI State Machine (Idle, Patrol, Detection, Chase, Attack)  
-
-> ✅ Day 2 Completed — The world is alive with a functional enemy AI system.
+> ✅ **Day 3 Completed** — Combat system and AI are now fully functional and connected to player stats.
 
 ---
 
-### 🎯 Day 3 Goals — Combat & Interaction Systems
-Next step: refining combat feedback and player–world interaction.
+## 🎯 Day 4 Goals — Stat System & Progression  
+Next, the focus will be on expanding the stat system and connecting it with gameplay.
 
-Planned:
-- Expand Combat System (damage, hit detection, death handling)
-- Implement Parry and Interface systems  
-- Add Item Chest and Health Bar  
-- Integrate on-hit VFX and damage indicators
-
-> Focus will shift toward polishing gameplay feel and player feedback loops.
-
----
-
-## 🔧 Latest Updates (Today)
-
-### What was implemented today
-- Target detection and a working damage system have been created.
-- VFX for when characters take damage (hit reactions) have been implemented to improve feedback.
-- Knockback effect added and applied for both player and enemies on hit.
-- Player and enemy "dead" states implemented to handle death behavior and cleanup.
-- A chest object was created; it can be opened by attacking it and plays an open animation.
-  - Implementation detail: chests implement IDamageable — when attack logic calls IDamageable.TakeDamage on a chest, the chest responds by playing its open animation. This reuses the damage interface to trigger interactable behavior.
-- There is currently no item/loot system, so chests only play the open animation; loot pickup will be added later.
-
----
-
-## 🚧 Next Tasks (Planned next work)
-
-### Short-term plans
-- Add an enemy "stunned" state to handle temporary incapacitation on certain hits.
-- Implement player counterattack/parry logic so skilled timing can negate or reverse damage.
-- Add a visible health bar system for player and enemies.
-- Create VFX for when an attack successfully hits (separate from damage-taken VFX), to reinforce impact.
+**Planned:**
+- Complete the **Stat System** (strength, agility, vitality, intelligence, etc.)  
+- Make stats dynamically affect combat (damage, evasion, critical damage etc.)  
 
 ---
 

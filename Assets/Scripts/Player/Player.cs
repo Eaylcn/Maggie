@@ -18,6 +18,7 @@ public class Player : Entity
     public PlayerBasicAttackState basicAttackState { get; private set; }
     public PlayerJumpAttackState jumpAttackState { get; private set; }
     public PlayerDeadState deadState { get; private set; }
+    public PlayerCounterAttackState counterAttackState { get; private set; }
 
     [Header("Attack Settings")]
     public Vector2[] attackMovement;             // |EN| Movement force vectors applied during each attack combo sequence |TR| Her saldırı kombo sekansı sırasında uygulanan hareket kuvveti vektörleri
@@ -57,6 +58,7 @@ public class Player : Entity
         basicAttackState = new PlayerBasicAttackState(this, stateMachine, "BasicAttack");
         jumpAttackState = new PlayerJumpAttackState(this, stateMachine, "JumpAttack");
         deadState = new PlayerDeadState(this, stateMachine, "Dead");
+        counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
     }
 
     protected override void Start()

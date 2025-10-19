@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    public event Action OnFlipped; // |EN| Event triggered when the entity flips direction |TR| Varlık yön değiştirdiğinde tetiklenen olay
+
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     protected StateMachine stateMachine;
@@ -97,8 +100,10 @@ public class Entity : MonoBehaviour
     public void Flip()
     {
         transform.Rotate(0f, 180f, 0f);
-        facingRight = !facingRight; 
+        facingRight = !facingRight;
         facingDirection *= -1; // |EN| Multiply by -1 to invert the numerical facing direction |TR| Sayısal bakış yönünü tersine çevirmek için -1 ile çarp
+        
+        OnFlipped?.Invoke(); // |EN| Trigger flip event for subscribers |TR| Aboneler için çevirme olayını tetikle
     }
 
     // |EN| Performs raycast-based collision detection for ground and wall checking |TR| Zemin ve duvar kontrolü için ışın tabanlı çarpışma algılaması gerçekleştirir

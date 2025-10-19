@@ -7,6 +7,7 @@ public class Enemy : Entity
     public EnemyAttackState attackState { get; set; }
     public EnemyBattleState battleState { get; set; }
     public EnemyDeadState deadState { get; set; }
+    public EnemyStunnedState stunnedState { get; set; }
 
     [Header("Battle Settings")]
     public float battleMoveSpeed = 3f; // |EN| Movement speed when in battle state |TR| Savaş durumundayken hareket hızı
@@ -14,6 +15,11 @@ public class Enemy : Entity
     public float battleTimeDuration = 5f; // |EN| Duration in seconds for how long the enemy stays in battle state after losing player sight |TR| Düşmanın oyuncuyu görmeyi kaybettikten sonra savaş durumunda ne kadar süre kaldığı saniye cinsinden
     public float minRetreatDistance = 1f; // |EN| Minimum distance to maintain from player when retreating |TR| Geri çekilirken oyuncudan korunacak minimum mesafe
     public Vector2 retreatVelocity; // |EN| Velocity applied when retreating from player |TR| Oyuncudan geri çekilirken uygulanan hız
+
+    [Header("Stunned State Details")]
+    public float stunnedDuration = 1f; // |EN| Duration in seconds for how long the enemy remains stunned |TR| Düşmanın ne kadar süre sersemlemiş kaldığı saniye cinsinden
+    public Vector2 stunnedKnockbackForce = new Vector2(5f, 5f); // |EN| Force applied to enemy when stunned |TR| Sersemletildiğinde düşmana uygulanan kuvvet
+    protected bool canbeStunned; // |EN| Indicates if the enemy can be countered by the player |TR| Düşmanın oyuncu tarafından karşılanıp karşılanamayacağını gösterir
 
     [Header("Movement Settings")]
     public float idleDuration = 2f; // |EN| Duration in seconds for how long the enemy stays idle before moving |TR| Düşmanın hareket etmeden önce ne kadar süre boşta kaldığı saniye cinsinden
@@ -27,6 +33,8 @@ public class Enemy : Entity
     [SerializeField] private Transform playerCheck; 
     [SerializeField] private float playerCheckDistance = 10f; // |EN| Distance for raycasting to detect player |TR| Oyuncuyu algılamak için ışınlama mesafesi
     public Transform player { get; private set; } // |EN| Reference to the detected player transform |TR| Algılanan oyuncu transformuna referans
+
+    public void EnableCounterWindow(bool enable) => canbeStunned = enable; // |EN| Enables or disables the enemy's ability to be countered |TR| Düşmanın karşılanabilme yeteneğini etkinleştirir veya devre dışı bırakır
 
     public override void EntityDeath()
     {

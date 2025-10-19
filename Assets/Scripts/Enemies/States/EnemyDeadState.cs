@@ -16,7 +16,7 @@ public class EnemyDeadState : EnemyState
         // |EN| Apply the "bounce then fall off map" death effect (refactored into a method for reuse) 
         // |TR| "Zıpla sonra haritadan düş" ölüm etkisini uygular (yeniden kullanılabilirlik için metoda ayrıldı)
         // ApplyDeathBounce();
-
+        
         // |EN| Disable further state changes upon death |TR| Ölüm üzerine daha fazla durum değişikliğini devre dışı bırak
         stateMachine.SwitchOffStateMachine();
     }
@@ -30,6 +30,9 @@ public class EnemyDeadState : EnemyState
         // |TR| Ölüm animasyonu kullanılmıyorsa yatay/düşey hareketi sıfırlamaya devam et.
         // Eğer sprite'ı hareket ettiren özel bir ölüm animasyonu oynatıyorsanız bu çağrıyı kaldırabilirsiniz.
         enemy.SetVelocity(0, 0);
+
+        if (triggerCalled)
+            Object.Destroy(enemy.gameObject); // |EN| Destroy enemy object after death animation finishes |TR| Ölüm animasyonu bittikten sonra düşman nesnesini yok et
     }
 
     // |EN| Performs the Mario-like death effect: disable animator/collider, give an upward impulse, then increase gravity so the enemy falls faster.

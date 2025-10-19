@@ -15,11 +15,15 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.fallState);
 
         // |EN| Transition to Jump state if jump input is detected |TR| Zıplama girdisi algılanırsa Jump state'ine geçiş yap
-        if (input.Player.Jump.WasPerformedThisFrame())
+        if (input.Player.Jump.WasPressedThisFrame())
             stateMachine.ChangeState(player.jumpState);
 
         // |EN| Transition to Attack state if attack input is detected |TR| Saldırı girdisi algılanırsa Attack state'ine geçiş yap
-        if (input.Player.Attack.WasPerformedThisFrame())
+        if (input.Player.Attack.WasPressedThisFrame())
             stateMachine.ChangeState(player.basicAttackState);
+
+        // |EN| Transition to Counter-Attack state if counter-attack input is detected |TR| Karşı saldırı girdisi algılanırsa Counter-Attack state'ine geçiş yap
+        if (input.Player.CounterAttack.WasPressedThisFrame())
+            stateMachine.ChangeState(player.counterAttackState);
     }
 }
