@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class Player : Entity
 {
+    public static event Action OnPlayerDeath; // |EN| Event triggered when the player dies |TR| Oyuncu öldüğünde tetiklenen olay
+
     public PlayerInputSet input { get; private set; }
     
     public PlayerIdleState idleState { get; private set; }
@@ -14,6 +17,7 @@ public class Player : Entity
     public PlayerDashState dashState { get; private set; }
     public PlayerBasicAttackState basicAttackState { get; private set; }
     public PlayerJumpAttackState jumpAttackState { get; private set; }
+    public PlayerDeadState deadState { get; private set; }
 
     [Header("Attack Settings")]
     public Vector2[] attackMovement;             // |EN| Movement force vectors applied during each attack combo sequence |TR| Her saldırı kombo sekansı sırasında uygulanan hareket kuvveti vektörleri
@@ -52,6 +56,7 @@ public class Player : Entity
         dashState = new PlayerDashState(this, stateMachine, "Dash");
         basicAttackState = new PlayerBasicAttackState(this, stateMachine, "BasicAttack");
         jumpAttackState = new PlayerJumpAttackState(this, stateMachine, "JumpAttack");
+        deadState = new PlayerDeadState(this, stateMachine, "Dead");
     }
 
     protected override void Start()
@@ -59,6 +64,14 @@ public class Player : Entity
         base.Start();
 
         stateMachine.Initialize(idleState);
+    }
+
+    public override void EntityDeath()
+    {
+        base.EntityDeath();
+
+        OnPlayerDeath?.Invoke(); // |EN| Trigger player death event for subscribers |TR| Aboneler için oyuncu ölüm olayını tetikle
+        stateMachine.ChangeState(deadState);
     }
     
     // |EN| Initiates attack state transition with coroutine queue system for smooth input handling |TR| Pürüzsüz girdi işleme için coroutine kuyruk sistemi ile saldırı durumu geçişini başlatır

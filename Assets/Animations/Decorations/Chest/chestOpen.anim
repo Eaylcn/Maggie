@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: playerBasicAttack_2
+  m_Name: chestOpen
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -328572923, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
+      value: {fileID: 21300000, guid: a582aaa839c0b4140b05bf9c4491608b, type: 3}
     - time: 0.083333336
-      value: {fileID: 919578400, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
+      value: {fileID: 21300000, guid: ef50d8583ad663545a101da61d30b9b3, type: 3}
     - time: 0.16666667
-      value: {fileID: -1172442408, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
+      value: {fileID: 21300000, guid: 6a38358b42992584094072fb55e1f6f2, type: 3}
     - time: 0.25
-      value: {fileID: -1194208763, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
+      value: {fileID: 21300000, guid: 7c33c533629f0044dac7ad2e2b37fb09, type: 3}
+    - time: 0.33333334
+      value: {fileID: 21300000, guid: 9b357ccdd2aca5e47bd146c22e5cd125, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,16 +52,17 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -328572923, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
-    - {fileID: 919578400, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
-    - {fileID: -1172442408, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
-    - {fileID: -1194208763, guid: fd7fbd073ee4d8e47b8bd43613812f96, type: 3}
+    - {fileID: 21300000, guid: a582aaa839c0b4140b05bf9c4491608b, type: 3}
+    - {fileID: 21300000, guid: ef50d8583ad663545a101da61d30b9b3, type: 3}
+    - {fileID: 21300000, guid: 6a38358b42992584094072fb55e1f6f2, type: 3}
+    - {fileID: 21300000, guid: 7c33c533629f0044dac7ad2e2b37fb09, type: 3}
+    - {fileID: 21300000, guid: 9b357ccdd2aca5e47bd146c22e5cd125, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 0.41666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -78,11 +81,4 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events:
-  - time: 0.25
-    functionName: CurrentStateTrigger
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
+  m_Events: []

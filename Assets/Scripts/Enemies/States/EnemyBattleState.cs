@@ -13,10 +13,9 @@ public class EnemyBattleState : EnemyState
     {
         base.Enter();
 
-        // |EN| Get reference to player from raycast detection we are using like that because of we able to enter this state only by raycasting to player and also more efficient than other methods
-        // |TR| Oyuncuya referans almak için kullandığımız ışınlama, çünkü bu duruma yalnızca oyuncuya ışınlama yaparak girebiliyoruz ve ayrıca diğer yöntemlerden daha verimli
-        if (player == null)
-            player = enemy.PlayerDetected().transform;
+        UpdateBattleTimer(); // |EN| If we enter battle state without seeing player first time set the timer |TR| Oyuncuyu görmeden savaş durumuna girersek zamanlayıcıyı ayarla
+
+        player ??= enemy.GetPlayerReference(); // |EN| Mean is if player is null then get player reference from enemy |TR| Anlamı, eğer oyuncu null ise düşmandan oyuncu referansını al
 
         if (ShouldRetreat())
         {

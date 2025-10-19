@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -18,6 +19,9 @@ public class Entity : MonoBehaviour
     [SerializeField] Transform secondaryWallCheck;              // |EN| Secondary transform position for improved wall detection accuracy |TR| Geliştirilmiş duvar algılama doğruluğu için ikincil transform pozisyonu
     public bool groundDetected { get; private set; }
     public bool wallDetected { get; private set; }
+
+    private bool isKnockbacked; // |EN| Is the entity currently being knocked back? |TR| Varlık şu anda geri tepme etkisi altında mı?
+    private Coroutine knockbackCoroutine; // |EN| Reference to the knockback coroutine |TR| Geri tepme coroutine'ine referans
 
     // |EN| Called when script instance is loaded, initializes core components |TR| Script örneği yüklendiğinde çağrılır, temel bileşenleri başlatır
     protected virtual void Awake()
@@ -47,9 +51,35 @@ public class Entity : MonoBehaviour
         stateMachine.currentState.CallAnimationTrigger(); // |EN| Delegates animation trigger to current state for proper handling |TR| Uygun işlem için animasyon tetikleyicisini mevcut duruma devreder
     }
 
+    public virtual void EntityDeath()
+    {
+        // |EN| Handle entity death logic here |TR| Varlık ölüm mantığını burada ele alın
+    }
+
+    public void ReceiveKnockback(Vector2 force, float duration)
+    {
+        if (knockbackCoroutine != null) // |EN| If already being knocked back, stop the current knockback coroutine |TR| Zaten geri tepme etkisi altındaysa, mevcut geri tepme coroutine'ini durdur
+            StopCoroutine(knockbackCoroutine);
+
+        knockbackCoroutine = StartCoroutine(KnockbackCo(force, duration)); // |EN| Start new knockback coroutine with specified force and duration |TR| Belirtilen kuvvet ve süre ile yeni geri tepme coroutine'ini başlat
+    }
+
+    private IEnumerator KnockbackCo(Vector2 force, float duration)
+    {
+        isKnockbacked = true; // |EN| Set knockback state to true |TR| Geri tepme durumunu true olarak ayarla
+        rb.linearVelocity = force; // |EN| Apply knockback force to rigidbody |TR| Rigidbody'ye geri tepme kuvveti uygula
+
+        yield return new WaitForSeconds(duration); // |EN| Wait for the knockback duration |TR| Geri tepme süresini bekle
+
+        rb.linearVelocity = Vector2.zero; // |EN| Reset velocity after knockback |TR| Geri tepme sonrası hızı sıfırla
+        isKnockbacked = false; // |EN| Reset knockback state to false |TR| Geri tepme durumunu false olarak sıfırla
+    }
+
     // |EN| Sets entity velocity and handles directional flipping based on movement |TR| Varlığın hızını ayarlar ve harekete dayalı yön çevirme işlemini yönetir
     public void SetVelocity(float xVelocity, float yVelocity)
     {
+        if (isKnockbacked) return; // |EN| Prevents setting velocity if entity is currently being knocked back |TR| Varlık şu anda geri tepme etkisi altındaysa hızı ayarlamayı engeller
+
         rb.linearVelocity = new Vector2(xVelocity, yVelocity); // |EN| Apply velocity to rigidbody for physics movement |TR| Fizik hareketi için rigidbody'ye hız uygula
         HandleFlip(xVelocity); // |EN| Check and handle entity flipping based on horizontal movement |TR| Yatay harekete dayalı varlık çevirme işlemini kontrol et ve yönet
     }

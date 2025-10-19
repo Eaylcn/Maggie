@@ -44,6 +44,9 @@ TagManager:
   - name: Ground
     uniqueID: 3492506583
     locked: 0
+  - name: Decoration
+    uniqueID: 2541835869
+    locked: 0
   - name: Enemy
     uniqueID: 2019258265
     locked: 0

@@ -6,6 +6,7 @@ public class Enemy : Entity
     public EnemyMoveState moveState { get; set; }
     public EnemyAttackState attackState { get; set; }
     public EnemyBattleState battleState { get; set; }
+    public EnemyDeadState deadState { get; set; }
 
     [Header("Battle Settings")]
     public float battleMoveSpeed = 3f; // |EN| Movement speed when in battle state |TR| Savaş durumundayken hareket hızı
@@ -25,8 +26,39 @@ public class Enemy : Entity
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private Transform playerCheck; 
     [SerializeField] private float playerCheckDistance = 10f; // |EN| Distance for raycasting to detect player |TR| Oyuncuyu algılamak için ışınlama mesafesi
+    public Transform player { get; private set; } // |EN| Reference to the detected player transform |TR| Algılanan oyuncu transformuna referans
 
-    // |EN| Casts a ray to detect the player within a certain distance |TR| Belirli bir mesafe içinde oyuncuyu algılamak için bir ışın atar
+    public override void EntityDeath()
+    {
+        base.EntityDeath();
+
+        stateMachine.ChangeState(deadState);
+    }
+
+    private void HandlePlayerDeath()
+    {
+        stateMachine.ChangeState(idleState);
+    }
+
+    public void TryEnterBattleState(Transform player)
+    {
+        // |EN| If already in battle state or attack state, do nothing |TR| Zaten savaş veya atak durumundaysa, hiçbir şey yapma
+        if (stateMachine.currentState == battleState || stateMachine.currentState == attackState) return;
+
+        this.player = player; // |EN| Set the detected player transform |TR| Algılanan oyuncu transformunu ayarla
+        stateMachine.ChangeState(battleState);
+    }
+    
+    public Transform GetPlayerReference()
+    {
+        if (player == null)
+            player = PlayerDetected().transform;
+
+        return player;
+    }
+
+    // |EN| Get reference to player from raycast detection we are using like that because of we able to enter this state only by raycasting to player and also more efficient than other methods
+    // |TR| Oyuncuya referans almak için kullandığımız ışınlama, çünkü bu duruma yalnızca oyuncuya ışınlama yaparak girebiliyoruz ve ayrıca diğer yöntemlerden daha verimli
     public RaycastHit2D PlayerDetected()
     {
         // |EN| Raycast to check for player detection and if hit ground before player then ignore |TR| Oyuncu algılanması için ışın atar ve oyuncudan önce zemin vurulursa yoksayar
@@ -53,5 +85,15 @@ public class Enemy : Entity
         // |EN| Draws retreat distance ray in Scene view for debugging and visualization |TR| Hata ayıklama ve görselleştirme için Sahne görünümünde geri çekilme mesafesi ışınını çizer
         Gizmos.color = Color.green;
         Gizmos.DrawLine(playerCheck.position, new Vector3(playerCheck.position.x + (facingDirection * minRetreatDistance), playerCheck.position.y));
+    }
+
+    private void OnEnable()
+    {
+        Player.OnPlayerDeath += HandlePlayerDeath; // |EN| Subscribe to player death event to handle enemy behavior |TR| Düşman davranışını yönetmek için oyuncu ölüm olayına abone ol
+    }
+
+    private void OnDisable()
+    {
+        Player.OnPlayerDeath -= HandlePlayerDeath; // |EN| Unsubscribe from player death event to prevent memory leaks |TR| Bellek sızıntılarını önlemek için oyuncu ölüm olayından aboneliği kaldır
     }
 }

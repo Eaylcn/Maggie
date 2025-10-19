@@ -17,16 +17,20 @@ using UnityEngine;
 public class StateMachine
 {
     public EntityState currentState { get; private set; }
+    public bool allowStateChange; // |EN| Flag to control if state changes are allowed |TR| Durum değişikliklerine izin verilip verilmediğini kontrol eden bayrak
 
     // |EN| Initialize the state machine with a starting state |TR| State machine'i başlangıç state'i ile başlat
     public void Initialize(EntityState startingState)
     {
+        allowStateChange = true; // |EN| Allow state changes by default |TR| Varsayılan olarak durum değişikliklerine izin ver
         currentState = startingState;
         currentState.Enter();
     }
 
     public void ChangeState(EntityState newState)
     {
+        if (!allowStateChange) return; // |EN| If state changes are not allowed, do nothing |TR| Durum değişikliklerine izin verilmiyorsa, hiçbir şey yapma
+
         // |EN| Call the Exit method of the current state |TR| Mevcut state'in Exit methodunu çağır
         currentState.Exit();
 
@@ -42,4 +46,6 @@ public class StateMachine
         // |EN| Update the current state |TR| Mevcut state'i güncelle
         currentState.Update();
     }
+
+    public void SwitchOffStateMachine() => allowStateChange = false; // |EN| Disable state changes |TR| Durum değişikliklerini devre dışı bırak
 }

@@ -19,14 +19,21 @@ using UnityEngine;
 public class EntityAnimationTriggers : MonoBehaviour
 {
     private Entity entity;
+    private EntityCombat entityCombat;
 
     private void Awake()
     {
         entity = GetComponentInParent<Entity>(); // |EN| Get reference to the Entity script in parent GameObject |TR| Üst GameObject'teki Entity script'ine referans al
+        entityCombat = GetComponentInParent<EntityCombat>(); // |EN| Get reference to the EntityCombat script in parent GameObject |TR| Üst GameObject'teki EntityCombat script'ine referans al
     }
 
     public void CurrentStateTrigger()
     {
         entity.TriggerCurrentStateAnimation(); // |EN| Forward the call to the Entity script |TR| Çağrıyı Entity script'ine ilet
+    }
+
+    private void AttackTrigger()
+    {
+        entityCombat.PerformAttack(); // |EN| Call the PerformAttack method in EntityCombat script |TR| EntityCombat script'inde PerformAttack yöntemini çağır
     }
 }
