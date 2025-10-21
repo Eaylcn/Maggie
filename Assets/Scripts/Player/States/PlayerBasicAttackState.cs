@@ -48,6 +48,7 @@ public class PlayerBasicAttackState : PlayerState
         base.Enter();
         comboAttackQueued = false; // |EN| Reset combo attack queued flag |TR| Kombo saldırı sıraya alındı bayrağını sıfırla
         ResetComboIfNeeded();
+        SyncAttackSpeed(); // |EN| Sync attack speed with player stats |TR| Saldırı hızını oyuncu istatistikleriyle senkronize et
 
         // |EN| Determine attack direction based on movement input or facing direction |TR| Hareket girdisine veya bakış yönüne göre saldırı yönünü belirle
         attackDirection = player.movementInput.x != 0 ? (int)player.movementInput.x : player.facingDirection;

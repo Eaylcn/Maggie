@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlayerDeadState : PlayerState
 {
-    EnemyVFX enemyVFX;
+    EntityVFX vfx;
 
     public PlayerDeadState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
-        enemyVFX = player.GetComponentInChildren<EnemyVFX>();
+        vfx = player.GetComponent<EntityVFX>();
     }
 
     public override void Enter()
@@ -16,6 +16,13 @@ public class PlayerDeadState : PlayerState
         input.Disable(); // |EN| Disable player input upon death |TR| Ölüm üzerine oyuncu girdisini devre dışı bırak
         rb.simulated = false; // |EN| Disable physics simulation to prevent further movement |TR| Daha fazla hareketi önlemek için fizik simülasyonunu devre dışı bırak
         stateMachine.SwitchOffStateMachine(); // |EN| Disable further state changes upon death |TR| Ölüm üzerine daha fazla durum değişikliğini devre dışı bırak
-        enemyVFX.EnableAttackAlertVFX(false); // |EN| Disable any active attack alert VFX |TR| Aktif saldırı uyarı VFX'sini devre dışı bırak
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        
+        if (vfx.isAnyStatusVfxPlaying) 
+            vfx.StopAllStatusVfx(); // |EN| Stop all status VFX upon death |TR| Ölümde tüm durum VFX'lerini durdur
     }
 }

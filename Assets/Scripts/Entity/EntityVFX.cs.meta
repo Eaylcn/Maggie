@@ -4,7 +4,9 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - onDamageMaterial: {fileID: 2100000, guid: 2d04224eabcf7944f9e294256d423b7b, type: 2}
+  - onTakingDamageMaterial: {fileID: 2100000, guid: 2d04224eabcf7944f9e294256d423b7b, type: 2}
+  - hitVfxPrefab: {fileID: 6312912224443207665, guid: 67b5dbd587f801046a4aca101249fd21, type: 3}
+  - criticalHitVfxPrefab: {fileID: 616480220051815176, guid: a98e73f08bc96e2449270d9baca6727e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

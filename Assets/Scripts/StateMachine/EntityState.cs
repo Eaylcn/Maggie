@@ -8,6 +8,7 @@ public abstract class EntityState
     // |EN| Cached commonly used components |TR| Önbelleğe alınmış sık kullanılan bileşenler
     protected Animator anim;
     protected Rigidbody2D rb;
+    protected EntityStats stats;
 
     protected float stateTimer; // |EN| Timer to track duration in the state |TR| State'deki süreyi takip etmek için zamanlayıcı
     protected bool triggerCalled; // |EN| Flag to ensure triggers are called on animation events |TR| Animasyon olaylarında tetikleyicilerin çağrıldığından emin olmak için bayrak
@@ -48,5 +49,11 @@ public abstract class EntityState
     public virtual void UpdateAnimationParameters()
     {
         // |EN| Override in derived states to update specific animation parameters |TR| Belirli animasyon parametrelerini güncellemek için türetilmiş state'lerde geçersiz kılın
+    }
+
+    public void SyncAttackSpeed()
+    {
+        float attackSpeed = stats.offensiveStats.attackSpeed.GetValue();
+        anim.SetFloat("AttackSpeedMultiplier", attackSpeed); // |EN| Update attack speed parameter in animations |TR| Animasyonlarda saldırı hızı parametresini güncelle
     }
 }

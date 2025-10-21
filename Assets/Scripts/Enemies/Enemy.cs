@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : Entity
@@ -33,6 +34,27 @@ public class Enemy : Entity
     [SerializeField] private Transform playerCheck; 
     [SerializeField] private float playerCheckDistance = 10f; // |EN| Distance for raycasting to detect player |TR| Oyuncuyu algılamak için ışınlama mesafesi
     public Transform player { get; private set; } // |EN| Reference to the detected player transform |TR| Algılanan oyuncu transformuna referans
+
+
+    // |EN| Slowdown the enemy's movement and animation speed temporarily |TR| Düşmanın hareket ve animasyon hızını geçici olarak yavaşlat
+    protected override IEnumerator SlowdownEntityCo(float slowMultiplier, float duration)
+    {
+        float originalMoveSpeed = moveSpeed;
+        float originalBattleMoveSpeed = battleMoveSpeed;
+        float originalAnimSpeed = anim.speed;
+
+        float speedMultiplier = 1 - slowMultiplier; // |EN| Calculate speed multiplier based on slow effect |TR| Yavaşlatma etkisine göre hız çarpanını hesapla
+
+        moveSpeed *= speedMultiplier;
+        battleMoveSpeed *= speedMultiplier;
+        anim.speed *= speedMultiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalMoveSpeed;
+        battleMoveSpeed = originalBattleMoveSpeed;
+        anim.speed = originalAnimSpeed;
+    }
 
     public void EnableCounterWindow(bool enable) => canbeStunned = enable; // |EN| Enables or disables the enemy's ability to be countered |TR| Düşmanın karşılanabilme yeteneğini etkinleştirir veya devre dışı bırakır
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Data;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -8,6 +9,7 @@ public class Entity : MonoBehaviour
 
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
+    public EntityStats stats { get; private set; }
     protected StateMachine stateMachine;
 
     private bool facingRight = true;                        // |EN| Tracks whether entity is currently facing right direction |TR| Varlığın şu anda sağa doğru bakıp bakmadığını takip eder
@@ -25,13 +27,16 @@ public class Entity : MonoBehaviour
 
     private bool isKnockbacked; // |EN| Is the entity currently being knocked back? |TR| Varlık şu anda geri tepme etkisi altında mı?
     private Coroutine knockbackCoroutine; // |EN| Reference to the knockback coroutine |TR| Geri tepme coroutine'ine referans
+    private Coroutine slowdownCoroutine; // |EN| Reference to the slowdown coroutine |TR| Yavaşlatma coroutine'ine referans
+    private Coroutine stunCoroutine; // |EN| Reference to the stun coroutine |TR| Sersemletme coroutine'ine referans
 
     // |EN| Called when script instance is loaded, initializes core components |TR| Script örneği yüklendiğinde çağrılır, temel bileşenleri başlatır
     protected virtual void Awake()
     {
         // |EN| Initialize component references before state machine setup |TR| Durum makinesi kurulumundan önce bileşen referanslarını başlat
-        anim = GetComponentInChildren<Animator>(); 
+        anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        stats = GetComponent<EntityStats>();
 
         stateMachine = new StateMachine();
     }
@@ -57,6 +62,37 @@ public class Entity : MonoBehaviour
     public virtual void EntityDeath()
     {
         // |EN| Handle entity death logic here |TR| Varlık ölüm mantığını burada ele alın
+    }
+
+    public virtual void SlowdownEntity(float slowMultiplier, float duration)
+    {
+        if (slowdownCoroutine != null) // |EN| If already slowed down, stop the current slowdown coroutine |TR| Zaten yavaşlatılmışsa, mevcut yavaşlatma coroutine'ini durdur
+            StopCoroutine(slowdownCoroutine);
+
+        slowdownCoroutine = StartCoroutine(SlowdownEntityCo(slowMultiplier, duration)); // |EN| Start new slowdown coroutine with specified multiplier and duration |TR| Belirtilen çarpan ve süre ile yeni yavaşlatma coroutine'ini başlat
+    }
+
+    protected virtual IEnumerator SlowdownEntityCo(float slowMultiplier, float duration)
+    {
+        yield return null; // |EN| Placeholder for slowdown logic implementation |TR| Yavaşlatma mantığı uygulaması için yer tutucu
+    }
+
+    public virtual void StunEntity(float duration)
+    {
+        if (stunCoroutine != null) // |EN| If already stunned, stop the current stun coroutine |TR| Zaten sersemletilmişse, mevcut sersemletme coroutine'ini durdur
+            StopCoroutine(stunCoroutine);
+
+        stunCoroutine = StartCoroutine(StunEntityCo(duration)); // |EN| Start new stun coroutine with specified duration |TR| Belirtilen süre ile yeni sersemletme coroutine'ini başlat
+    }
+
+    protected virtual IEnumerator StunEntityCo(float duration)
+    {
+        anim.enabled = false; // |EN| Disable animations during stun |TR| Sersemletme sırasında animasyonları devre dışı bırak
+        SetVelocity(0f, rb.linearVelocity.y); // |EN| Stop horizontal movement while stunned |TR| Sersemletildiğinde yatay hareketi durdur
+
+        yield return new WaitForSeconds(duration); // |EN| Wait for the stun duration |TR| Sersemletme süresini bekle
+
+        anim.enabled = true; // |EN| Re-enable animations after stun ends |TR| Sersemletme sona erdikten sonra animasyonları yeniden etkinleştir
     }
 
     public void ReceiveKnockback(Vector2 force, float duration)

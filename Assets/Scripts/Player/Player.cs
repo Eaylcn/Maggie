@@ -68,6 +68,56 @@ public class Player : Entity
         stateMachine.Initialize(idleState);
     }
 
+    protected override IEnumerator StunEntityCo(float duration)
+    {
+        anim.enabled = false; // |EN| Disable animator to freeze current animation frame |TR| Mevcut animasyon karesini dondurmak için animatörü devre dışı bırak
+        input.Disable(); // |EN| Disable player input upon death |TR| Ölüm üzerine oyuncu girdisini devre dışı bırak
+        
+        yield return new WaitForSeconds(duration);
+
+        anim.enabled = true; // |EN| Re-enable animator after stun duration |TR| Sersemletme süresi sona erdikten sonra animatörü yeniden etkinleştir
+        input.Enable(); // |EN| Re-enable player input after stun duration |TR| Sersemletme süresi sona erdikten sonra oyuncu girdisini yeniden etkinleştir
+    }
+
+    protected override IEnumerator SlowdownEntityCo(float slowMultiplier, float duration)
+    {
+        float originalMoveSpeed = moveSpeed;
+        float originalJumpForce = jumpForce;
+        float originalDashSpeed = dashSpeed;
+        float originalAnimSpeed = anim.speed;
+        Vector2 originalWallJumpForce = wallJumpForce;
+        Vector2 originalJumpAttackMovement = jumpAttackMovement;
+        Vector2[] originalAttackMovement = new Vector2[attackMovement.Length]; // |EN| Array to store original attack movement values |TR| Orijinal saldırı hareketi değerlerini saklamak için dizi
+        Array.Copy(attackMovement, originalAttackMovement, attackMovement.Length); // |EN| Create a copy of the original attack movement array |TR| Orijinal saldırı hareketi dizisinin bir kopyasını oluştur
+
+        float speedMultiplier = 1 - slowMultiplier; // |EN| Calculate speed multiplier based on slow effect |TR| Yavaşlatma etkisine göre hız çarpanını hesapla
+
+        moveSpeed *= speedMultiplier;
+        jumpForce *= speedMultiplier;
+        dashSpeed *= speedMultiplier;
+        anim.speed *= speedMultiplier;
+        wallJumpForce *= speedMultiplier;
+        jumpAttackMovement *= speedMultiplier;
+        for (int i = 0; i < attackMovement.Length; i++)
+        {
+            attackMovement[i] *= speedMultiplier;
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed = originalMoveSpeed;
+        jumpForce = originalJumpForce;
+        dashSpeed = originalDashSpeed;
+        anim.speed = originalAnimSpeed;
+        wallJumpForce = originalWallJumpForce;
+        jumpAttackMovement = originalJumpAttackMovement;
+
+        for (int i = 0; i < attackMovement.Length; i++)
+        {
+            attackMovement[i] = originalAttackMovement[i];
+        }
+    }
+
     public override void EntityDeath()
     {
         base.EntityDeath();

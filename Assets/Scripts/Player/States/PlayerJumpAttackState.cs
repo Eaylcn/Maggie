@@ -24,6 +24,7 @@ public class PlayerJumpAttackState : PlayerState
         // |EN| Check if the player has touched the ground |TR| Oyuncunun yere değip değmediğini kontrol et
         if (player.groundDetected && !touchedGround)
         {
+            SyncAttackSpeed();
             touchedGround = true; // |EN| Mark that the player has touched the ground |TR| Oyuncunun yere değdiğini işaretle
             anim.SetTrigger("JumpAttackTrigger"); // |EN| Trigger the jump attack animation |TR| Zıplama saldırısı animasyonunu tetikle
             player.SetVelocity(0f, rb.linearVelocityY); // |EN| Maintain vertical velocity |TR| Dikey hızı koru

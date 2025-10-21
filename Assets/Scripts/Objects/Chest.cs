@@ -9,7 +9,7 @@ public class Chest : MonoBehaviour, IDamageable
     [Header("Chest Settings")]
     [SerializeField] private Vector2 openForce = new Vector2(0, 5f); // |EN| Upward force applied when chest is opened |TR| Sandık açıldığında uygulanan yukarı doğru kuvvet
 
-    public bool TakeDamage(float damage, Transform damageSource)
+    public bool TakeDamage(float damage, float elementalDamage, ElementType elementType, Transform damageSource)
     {
         if (anim.GetBool("ChestOpen")) return false; // |EN| If chest is already open, ignore damage |TR| Sandık zaten açıksa hasarı yoksay
 

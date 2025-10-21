@@ -22,8 +22,8 @@ public class PlayerIdleState : PlayerGroundedState
         if (player.movementInput.x == player.facingDirection && player.wallDetected)
             return;
 
-        // |EN| Transition to Move state if there is movement input |TR| Hareket girdisi varsa Move state'ine geçiş yap
-        if (player.movementInput != Vector2.zero)
+        // |EN| Transition to Move state if there is horizontal movement input |TR| Yatay hareket girdisi varsa Move state'ine geçiş yap
+        if (player.movementInput.x != 0)
         {
             stateMachine.ChangeState(player.moveState);
         }

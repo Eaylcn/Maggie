@@ -4,9 +4,11 @@ using UnityEngine;
 public class StatOffensiveGroup
 {
     // |EN| Physical attack stats |TR| Fiziksel saldırı istatistikleri
-    public Stat damage;
+    public Stat physicalDamage;
     public Stat criticalChance;
     public Stat criticalDamagePower;
+    public Stat armorPenetration;
+    public Stat attackSpeed;
 
     // |EN| Elemental damage stats |TR| Elemental hasar istatistikleri
     public Stat fireDamage;

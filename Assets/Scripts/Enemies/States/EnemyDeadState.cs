@@ -3,10 +3,14 @@ using UnityEngine;
 public class EnemyDeadState : EnemyState
 {
     private Collider2D enemyCollider;
+    private UI_MiniHealthBar miniHealthBar;
+    private EnemyVFX vfx;
 
     public EnemyDeadState(Enemy enemy, StateMachine stateMachine, string animBoolName) : base(enemy, stateMachine, animBoolName)
     {
         enemyCollider = enemy.GetComponent<Collider2D>();
+        miniHealthBar = enemy.GetComponentInChildren<UI_MiniHealthBar>();
+        vfx = enemy.GetComponent<EnemyVFX>();
     }
 
     public override void Enter()
@@ -16,9 +20,12 @@ public class EnemyDeadState : EnemyState
         // |EN| Apply the "bounce then fall off map" death effect (refactored into a method for reuse) 
         // |TR| "Zıpla sonra haritadan düş" ölüm etkisini uygular (yeniden kullanılabilirlik için metoda ayrıldı)
         // ApplyDeathBounce();
-        
+
         // |EN| Disable further state changes upon death |TR| Ölüm üzerine daha fazla durum değişikliğini devre dışı bırak
+        
+        miniHealthBar.gameObject.SetActive(false); // |EN| Hide mini health bar upon death |TR| Ölüm üzerine mini sağlık çubuğunu gizle
         stateMachine.SwitchOffStateMachine();
+        vfx.EnableAttackAlertVFX(false); // |EN| Disable any active attack alert VFX |TR| Aktif saldırı uyarı VFX'sini devre dışı bırak
     }
 
     public override void Update()
@@ -30,6 +37,9 @@ public class EnemyDeadState : EnemyState
         // |TR| Ölüm animasyonu kullanılmıyorsa yatay/düşey hareketi sıfırlamaya devam et.
         // Eğer sprite'ı hareket ettiren özel bir ölüm animasyonu oynatıyorsanız bu çağrıyı kaldırabilirsiniz.
         enemy.SetVelocity(0, 0);
+        
+        if (vfx.isAnyStatusVfxPlaying) 
+            vfx.StopAllStatusVfx(); // |EN| Stop all status VFX upon death |TR| Ölümde tüm durum VFX'lerini durdur
 
         if (triggerCalled)
             Object.Destroy(enemy.gameObject); // |EN| Destroy enemy object after death animation finishes |TR| Ölüm animasyonu bittikten sonra düşman nesnesini yok et

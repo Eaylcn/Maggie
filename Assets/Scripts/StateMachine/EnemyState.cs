@@ -11,6 +11,7 @@ public class EnemyState : EntityState
         // |EN| Cache frequently used enemy components for better performance |TR| Daha iyi performans için sık kullanılan enemy bileşenlerini önbelleğe al
         anim = enemy.anim;
         rb = enemy.rb;
+        stats = enemy.stats;
     }
 
     override public void UpdateAnimationParameters()
